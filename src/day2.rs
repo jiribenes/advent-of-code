@@ -1,4 +1,5 @@
 use std::cmp;
+use itertools::Itertools;
 
 fn solve_row_easy(row: &[u32]) -> u32 {
     let first: u32 = *row.first().unwrap_or(&0);
@@ -10,16 +11,19 @@ fn solve_row_easy(row: &[u32]) -> u32 {
     max - min
 }
 
-fn solve_row_hard(row: &[u32]) -> u32 {
-    for &x in row {
-        for &y in row {
-            if x != y && x % y == 0 {
-                return x / y;
+fn solve_row_hard(row: &[u32]) -> Option<u32> {
+    row.iter()
+        .tuple_combinations()
+        .filter_map(|(a, b)| {
+            if a % b == 0 {
+                Some(a / b)
+            } else if b % a == 0 {
+                Some(b / a)
+            } else {
+                None
             }
-        }
-    }
-
-    0
+        })
+        .next()
 }
 
 fn parse_row(line: &str) -> Vec<u32> {
@@ -39,7 +43,7 @@ pub fn solve() {
     let hard: u32 = input
         .lines()
         .map(|line| parse_row(line))
-        .map(|row| solve_row_hard(&row))
+        .filter_map(|row| solve_row_hard(&row))
         .sum();
 
     println!("easy: {}, hard: {}", easy, hard);

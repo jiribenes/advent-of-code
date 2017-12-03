@@ -1,3 +1,5 @@
+extern crate itertools;
+
 mod day1;
 mod day2;
 
