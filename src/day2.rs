@@ -51,6 +51,6 @@ pub fn solve() {
 
 #[test]
 fn test_solve_hard() {
-    assert_eq!(solve_row_hard(&vec![1, 2, 3, 4]), 2);
-    assert_eq!(solve_row_hard(&vec![10, 12, 5, 7, 9]), 2);
+    assert_eq!(solve_row_hard(&vec![1, 2, 3, 4]), Some(2));
+    assert_eq!(solve_row_hard(&vec![10, 12, 5, 7, 9]), Some(2));
 }
